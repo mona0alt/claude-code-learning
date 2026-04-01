@@ -1,0 +1,10 @@
+flowchart LR
+    subgraph sandbox["沙箱内"]
+        A["curl https://evil.com"] --> B["连接代理<br/>127.0.0.1:PORT"]
+    end
+
+    subgraph proxy["沙箱代理"]
+        B --> C{"域名在<br/>allowedDomains?"}
+        C -->|Yes| D["转发到目标"]
+        C -->|No| E["返回 403"]
+    end

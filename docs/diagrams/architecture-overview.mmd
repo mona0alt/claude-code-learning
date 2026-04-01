@@ -1,0 +1,23 @@
+flowchart TB
+    subgraph "Layer 1: Claude Code"
+        A["Shell.ts<br/>shouldUseSandbox()"]
+        B["SandboxManager<br/>(sandbox-adapter.ts)"]
+        A --> B
+    end
+
+    subgraph "Layer 2: sandbox-runtime"
+        C["BaseSandboxManager<br/>生成 bwrap 命令"]
+        B --> C
+    end
+
+    subgraph "Layer 3: bubblewrap"
+        D["bwrap 二进制<br/>创建 namespace"]
+        C --> D
+    end
+
+    subgraph "Layer 4: Linux Kernel"
+        E["namespace 隔离<br/>PID/Mount/Network/UTS/IPC/User"]
+        F["seccomp 过滤<br/>阻止危险系统调用"]
+        D --> E
+        D --> F
+    end

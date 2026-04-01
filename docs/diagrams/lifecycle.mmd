@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> Initializing: REPL 启动
+    Initializing --> Ready: 初始化完成
+    Ready --> CommandExecuting: 命令执行
+    CommandExecuting --> Cleaning: 命令完成
+    Cleaning --> Ready: 清理完成
+    Ready --> Ready: 设置变更
+    Initializing --> Failed: 错误
+    Failed --> Initializing: 重试
